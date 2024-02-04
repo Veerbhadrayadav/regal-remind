@@ -5,7 +5,6 @@ import { LineChart } from "react-native-chart-kit";
 import RoundIconBtn from './RoundIconBtn';
 import BoxIconBtn from './BoxIconBtn';
 import EditTask from '../screens/EditTask';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const TaskDetail = (props) => {
     const { item } = props.route.params;

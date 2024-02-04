@@ -4,7 +4,6 @@ import AddNewTask from '../components/AddNewTask';
 import RoundIconBtn from '../components/RoundIconBtn';
 import SearchBar from '../components/SearchBar';
 import colors from '../misc/colors';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import TaskBox from '../components/TaskBox';
 
 
@@ -20,8 +19,8 @@ const HomeScreen = ({ user, navigation }) => {
         setGreet('Evening');
     };
 
-    const findTasks = async () => {
-        const result = await AsyncStorage.getItem('tasks');
+    const findTasks =  () => {
+        // const result = await AsyncStorage.getItem('tasks');
         if (result !== null) setTasks(JSON.parse(result));
     }
 
@@ -31,7 +30,7 @@ const HomeScreen = ({ user, navigation }) => {
         findGreet();
     }, []);
 
-    const handleOnSubmit = async (title, desc, target, daytime) => {
+    const handleOnSubmit =  (title, desc, target, daytime) => {
         const task = {
             id: Date.now(),
             title,
@@ -49,7 +48,7 @@ const HomeScreen = ({ user, navigation }) => {
         }
         const updatedTasks = [...tasks, task];
         setTasks(updatedTasks)
-        await AsyncStorage.setItem('tasks', JSON.stringify(updatedTasks));
+        // await AsyncStorage.setItem('tasks', JSON.stringify(updatedTasks));
         // console.log(task);
     };
 

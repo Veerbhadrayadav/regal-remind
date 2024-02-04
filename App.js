@@ -1,5 +1,5 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StatusBar } from 'expo-status-bar';
+import Realm from 'realm';
 import React, {useEffect , useState} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -8,15 +8,16 @@ import HomeScreen from './app/screens/HomeScreen';
 import Intro from './app/screens/Intro';
 import TaskDetail from './app/components/TaskDetail';
 import EditTask from './app/screens/EditTask';
+import realmObject from './app/storage/realmObject';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   const [user, setUser] = useState({})
-  const findUser = async () => {
-    const result = await AsyncStorage.getItem('user');
-    if (result !== null) {
-      setUser(JSON.parse(result));
+  const findUser = () => {
+    const savedUser = realmObject.objects('User')[0];
+    if (savedUser) {
+      setUser(savedUser);
     }
   };
 

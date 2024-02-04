@@ -1,4 +1,3 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useState} from 'react';
 import { View, StyleSheet, Text, TextInput, StatusBar, Dimensions } from 'react-native';
 import RoundIconBtn from '../components/RoundIconBtn';
@@ -8,9 +7,9 @@ const Intro = ({onFinish}) => {
     const [name, setName] = useState('');
     const handleTextChange = text => setName(text);
 
-    const handleSubmit = async () => {
+    const handleSubmit = () => {
         const user = { name: name };
-        await AsyncStorage.setItem('user', JSON.stringify(user));
+        // await AsyncStorage.setItem('user', JSON.stringify(user));
         if (onFinish) onFinish();
     };
 
