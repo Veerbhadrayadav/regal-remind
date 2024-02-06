@@ -1,8 +1,9 @@
 import Realm from 'realm';
 import constant from '../misc/constant';
 
+
 // User schema
-class User {
+class User extends Realm.Object {
   static get() {
     return realmObject.objects(User.schema.name);
   }
@@ -12,14 +13,14 @@ class User {
     properties: {
       username: { type: 'string' },
     //   email: { type: 'string', default: 'abc@example.com' },
-      tasks: { type: 'linkingObjects', objectType: 'Task', property: 'user' },
+      tasks: { type: 'list', objectType: 'Task', default: [] },
       // Add other user-related fields as needed
     },
   };
 }
 
 // Detail schema
-class Detail {
+class Detail extends Realm.Object {
   static get() {
     return realmObject.objects(Detail.schema.name);
   }
@@ -27,7 +28,7 @@ class Detail {
     name: 'Detail',
     primaryKey: 'date',
     properties: {
-      date: { type: 'date', default: constant.TODAY },
+      date: { type: 'string', default: constant.TODAY },
       timeSpent: { type: 'int', default: 0 },
       info: { type: 'string', default: 'No info provided' },
       task: { type: 'linkingObjects', objectType: 'Task', property: 'details' },
@@ -37,7 +38,7 @@ class Detail {
 }
 
 // Task schema
-class Task {
+class Task extends Realm.Object {
   static get() {
     return realmObject.objects(Task.schema.name);
   }
@@ -45,7 +46,7 @@ class Task {
     name: 'Task',
     primaryKey: 'id',
     properties: {
-      id: { type: 'date', default: new Date.now() },
+      id: { type: 'string', default: Date.now().toString() },
       completed: { type: 'bool', default: false },
       createdTimestamp: { type: 'date', default: constant.TODAY },
       currentStreak: {type: 'int', default: 0},
@@ -56,8 +57,8 @@ class Task {
       progress: {type: 'float', default: 0},
       target: {type: 'int', default: 21},
       title: { type: 'string' },
-      user: { type: 'linkingObjects', objectType: 'User', property: 'tasks' },
-      details: { type: 'list', objectType: 'Detail' },
+      user: { type: 'linkingObjects', objectType: 'User', property: 'tasks'},
+      details: { type: 'list', objectType: 'Detail', default: [] },
       // Add other task-related fields as needed
     },
   };

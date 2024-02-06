@@ -85,6 +85,7 @@ const AddNewTask = ({ visible, onClose, onSubmit }) => {
                     <TextInput
                         style={styles.streakValueStyle}
                         placeholder='Target' 
+                        keyboardType='numeric'
                         placeholderTextColor={colors.LIGHT} 
                         cursorColor={colors.LIGHT} 
                         onChangeText={(text) => selectTarget(text)} />

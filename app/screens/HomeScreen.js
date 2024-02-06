@@ -5,6 +5,7 @@ import RoundIconBtn from '../components/RoundIconBtn';
 import SearchBar from '../components/SearchBar';
 import colors from '../misc/colors';
 import TaskBox from '../components/TaskBox';
+import realmObject from '../storage/realmObject';
 
 
 const HomeScreen = ({ user, navigation }) => {
@@ -20,36 +21,26 @@ const HomeScreen = ({ user, navigation }) => {
     };
 
     const findTasks =  () => {
-        // const result = await AsyncStorage.getItem('tasks');
-        if (result !== null) setTasks(JSON.parse(result));
+        setTasks(user.tasks);
     }
 
     useEffect(() => {
-        // AsyncStorage.clear();
+        // realmObject.write(() => {
+        //     const newtask = realmObject.create('Task',{
+        //     title: 'task 1',
+        //     description: 'desc 1',
+        //     target: 10,
+        //     daytime: 'Day 11am to 3pm'
+        //     })
+        //     user.tasks.push(newtask);
+        // });
         findTasks();
         findGreet();
     }, []);
 
     const handleOnSubmit =  (title, desc, target, daytime) => {
-        const task = {
-            id: Date.now(),
-            title,
-            desc,
-            time: Date.now(),
-            target,
-            daytime,
-            currentStreak: '0',
-            maxStreak: '0',
-            progress:'0',
-            completed: false,
-            deleted: false,
-            details: {},
-
-        }
-        const updatedTasks = [...tasks, task];
-        setTasks(updatedTasks)
-        // await AsyncStorage.setItem('tasks', JSON.stringify(updatedTasks));
-        // console.log(task);
+        
+        // console.log(newtask);
     };
 
     const handleBoxPress = (item) => {
@@ -69,7 +60,7 @@ const HomeScreen = ({ user, navigation }) => {
             <StatusBar hidden />
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={styles.container}>
-                    <Text style={styles.headerstyle} >{`Good ${greet},${user.name}`}</Text>
+                    <Text style={styles.headerstyle} >{`Good ${greet},${user.username}`}</Text>
                     {tasks.length ? <SearchBar /> : null}
                     <FlatList
                         data={tasks}

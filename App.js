@@ -16,6 +16,7 @@ export default function App() {
   const [user, setUser] = useState({})
   const findUser = () => {
     const savedUser = realmObject.objects('User')[0];
+    console.log(savedUser);
     if (savedUser) {
       setUser(savedUser);
     }
@@ -27,7 +28,7 @@ export default function App() {
   }, []);
 
   
-  if (!user.name) return <Intro onFinish={findUser}/>;
+  if (!user.username) return <Intro onFinish={findUser}/>;
   return (
   <NavigationContainer>
     <Stack.Navigator screenOptions={{headerTitle:'', headerTransparent: true}}>

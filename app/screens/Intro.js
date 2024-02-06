@@ -2,14 +2,18 @@ import React, {useState} from 'react';
 import { View, StyleSheet, Text, TextInput, StatusBar, Dimensions } from 'react-native';
 import RoundIconBtn from '../components/RoundIconBtn';
 import colors from '../misc/colors';
+import realmObject from '../storage/realmObject';
 
 const Intro = ({onFinish}) => {
     const [name, setName] = useState('');
     const handleTextChange = text => setName(text);
 
     const handleSubmit = () => {
-        const user = { name: name };
-        // await AsyncStorage.setItem('user', JSON.stringify(user));
+        realmObject.write(() => {
+            realmObject.create('User',{
+                username: name
+            });
+        })
         if (onFinish) onFinish();
     };
 
