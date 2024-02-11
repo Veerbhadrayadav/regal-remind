@@ -48,7 +48,7 @@ class Task extends Realm.Object {
     properties: {
       id: { type: 'string', default: Date.now().toString() },
       completed: { type: 'bool', default: false },
-      createdTimestamp: { type: 'date', default: constant.TODAY },
+      createdTimestamp: { type: 'string', default: constant.TODAY },
       currentStreak: {type: 'int', default: 0},
       daytime: {type: 'string', default: ''},
       deleted: { type: 'bool', default: false },

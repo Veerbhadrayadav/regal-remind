@@ -4,13 +4,17 @@ import colors from '../misc/colors';
 import { LineChart } from "react-native-chart-kit";
 import RoundIconBtn from './RoundIconBtn';
 import BoxIconBtn from './BoxIconBtn';
-import EditTask from '../screens/EditTask';
+import EditTask from '../modals/EditTask';
+import realmObject from '../storage/realmObject';
+import DeleteTaskModal from '../modals/DeleteTask';
 
-const TaskDetail = (props) => {
+
+const TaskDetail = (props, handleTaskDelete) => {
     const { item } = props.route.params;
     const [tasks, setTasks] = useState([]);
     const [editScreenVisible, setEditSreenVisible] = useState(false);
     const [detail, setDetail] = useState({});
+    const [deleteConfirmationVisible, setDeleteConfirmationVisible] = useState(false);
 
     const width = Dimensions.get('window').width;
     const detailsArray = Object.entries(item.details).map(([date, data]) => ({ date, ...data }));
@@ -23,7 +27,9 @@ const TaskDetail = (props) => {
             }
         })
     };
-
+    const onDelete = (deleteType) => {
+        handleTaskDelete(item.id, deleteType);
+    }
     return (
         <>
             <FlatList
@@ -113,13 +119,17 @@ const TaskDetail = (props) => {
             />
             <View style={{ flexDirection: 'row', padding: 10, position: 'absolute', bottom: 0, alignSelf: 'center' }}>
                 <BoxIconBtn iconname='edit' size={30} title='Edit' onPress={() => setEditSreenVisible(true)} style={styles.btnStyle} />
-                <BoxIconBtn iconname='delete' size={30} title='Delete' onPress={() => onDelete} style={styles.btnStyle} />
+                <BoxIconBtn iconname='delete' size={30} title='Delete' onPress={() => setDeleteConfirmationVisible(true)} style={styles.btnStyle} />
             </View>
             <EditTask
                 item={item}
                 visible={editScreenVisible}
                 onCancel={() => setEditSreenVisible(false)}
                 onDone={(date, timespent, info) => handleOnDone(date, timespent, info)}
+            />
+            <DeleteTaskModal 
+                visible={deleteConfirmationVisible}
+                onDelete={(deleteType) => onDelete(deleteType) }
             />
         </>
     );

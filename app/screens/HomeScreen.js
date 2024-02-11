@@ -1,60 +1,69 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Text, StatusBar, ScrollView, Dimensions, TouchableWithoutFeedback, Keyboard, FlatList } from 'react-native';
-import AddNewTask from '../components/AddNewTask';
+import AddNewTask from '../modals/AddNewTask';
 import RoundIconBtn from '../components/RoundIconBtn';
 import SearchBar from '../components/SearchBar';
 import colors from '../misc/colors';
 import TaskBox from '../components/TaskBox';
 import realmObject from '../storage/realmObject';
-
+import Functions from '../misc/Functions';
 
 const HomeScreen = ({ user, navigation }) => {
     const [greet, setGreet] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
     const [tasks, setTasks] = useState([]);
-
     const findGreet = () => {
         const hrs = new Date().getHours();
         if (hrs === 0 || hrs < 12) return setGreet('Morning');
         if (hrs === 12 || hrs < 16) return setGreet('Afternoon');
         setGreet('Evening');
     };
-
     const findTasks =  () => {
         setTasks(user.tasks);
     }
-
+    const handleOnSubmit =  (title, desc, target, daytime) => {
+        realmObject.write(() => {
+            const newtask = realmObject.create('Task',{
+                id: Functions.randomString(16),
+                daytime,
+                description: desc,
+                target,
+                title
+            })
+            user.tasks.push(newtask);
+        })
+        // console.log(newtask);
+    };
+    const handleTaskDelete = (taskId, deleteType) => {
+        if (deleteType === 'temporary') {
+            realmObject.write(() => {
+                const taskToDelete = user.tasks.filtered(`id == '${taskId}'`)[0];
+                if (taskToDelete) {
+                    taskToDelete['deleted'] =true;
+                } else {
+                    console.warn('Task not found with ID:', taskId);
+                }
+            });
+        } else if (deleteType === 'permanent') {
+            realmObject.write(() => {
+                const taskToDelete = user.tasks.filtered(`id == '${taskId}'`)[0];
+                if (taskToDelete) {
+                    realmObject.delete(taskToDelete);
+                } else {
+                    console.warn('Task not found with ID:', taskId);
+                }
+            });
+        }
+        
+    };    
+    const handleBoxPress = (item, handleTaskDelete) => {
+        navigation.navigate('TaskDetail', { item, handleTaskDelete });
+    };
     useEffect(() => {
-        // realmObject.write(() => {
-        //     const newtask = realmObject.create('Task',{
-        //     title: 'task 1',
-        //     description: 'desc 1',
-        //     target: 10,
-        //     daytime: 'Day 11am to 3pm'
-        //     })
-        //     user.tasks.push(newtask);
-        // });
+        // handleTaskDelete(user.tasks[0].id);
         findTasks();
         findGreet();
     }, []);
-
-    const handleOnSubmit =  (title, desc, target, daytime) => {
-        
-        // console.log(newtask);
-    };
-
-    const handleBoxPress = (item) => {
-        navigation.navigate('TaskDetail', { item });
-    };
-
-    const handleLongPress = () => {
-        <View style={styles.longPressMenu}>
-            <Text>
-                delete karna h kya???
-            </Text>
-        </View>
-    };
-
     return (
         <>
             <StatusBar hidden />
@@ -67,7 +76,7 @@ const HomeScreen = ({ user, navigation }) => {
                         numColumns={2}
                         columnWrapperStyle={{ justifyContent: 'space-between' }}
                         keyExtractor={item => item.id.toString()}
-                        renderItem={({ item }) => <TaskBox onlongPress={handleLongPress} onPress={() => handleBoxPress(item)} item={item} />} />
+                        renderItem={({ item }) => <TaskBox onPress={() => handleBoxPress(item)} item={item} />} />
                     {
                         !tasks.length ?
                             <View style={[styles.emptyHeaderContainer, StyleSheet.absoluteFillObject]}>
@@ -138,9 +147,6 @@ const styles = StyleSheet.create({
         bottom: 15
         // elevation:15
     },
-    longPressMenu: {
-
-    }
 });
 
 export default HomeScreen;

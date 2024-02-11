@@ -2,13 +2,13 @@ import React from 'react';
 import { View, StyleSheet,Text, Dimensions, TouchableOpacity } from 'react-native';
 import colors from '../misc/colors';
 
-const TaskBox = ({item, onPress, onLongPress}) => {
+const TaskBox = ({item, onPress}) => {
     const title = item.title;
     const desc = item.desc;
     const target = item.target;
     
     return (
-       <TouchableOpacity onLongPress={onLongPress} onPress={onPress} style={styles.container}>
+       <TouchableOpacity onPress={onPress} style={styles.container}>
            <Text style={styles.title}>{title}</Text>
            <Text>{desc}</Text>
            <Text>{target}</Text>

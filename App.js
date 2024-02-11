@@ -1,16 +1,18 @@
-import { StatusBar } from 'expo-status-bar';
-import Realm from 'realm';
+import 'react-native-gesture-handler';
 import React, {useEffect , useState} from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import HomeScreen from './app/screens/HomeScreen';
 import Intro from './app/screens/Intro';
 import TaskDetail from './app/components/TaskDetail';
-import EditTask from './app/screens/EditTask';
 import realmObject from './app/storage/realmObject';
+import CustomDrawerContent from './app/components/UserMenu';
 
 const Stack = createNativeStackNavigator();
+
+const Drawer = createDrawerNavigator();
 
 export default function App() {
   const [user, setUser] = useState({})
@@ -31,12 +33,16 @@ export default function App() {
   if (!user.username) return <Intro onFinish={findUser}/>;
   return (
   <NavigationContainer>
-    <Stack.Navigator screenOptions={{headerTitle:'', headerTransparent: true}}>
-      <Stack.Screen name='HomeScreen' >
-        {(props) => <HomeScreen {...props} user={user}/>}
-      </Stack.Screen>
-      <Stack.Screen component={TaskDetail} name='TaskDetail'/>
-    </Stack.Navigator>
+    <Drawer.Navigator 
+        hidden 
+        drawerContent={(props) => <CustomDrawerContent {...props} userImage="" username={user.username} />}>
+        <Drawer.Screen 
+            hiddenw  
+            name='HomeScreen' >
+            {(props) => <HomeScreen {...props} user={user}/>}
+        </Drawer.Screen>
+        <Drawer.Screen component={TaskDetail} name='TaskDetail'/>
+    </Drawer.Navigator>
   </NavigationContainer>
   
   );

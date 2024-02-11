@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, StyleSheet, Modal, Text, StatusBar, TextInput, TouchableWithoutFeedback, Keyboard, Dimensions } from 'react-native';
 import colors from '../misc/colors';
 import RoundIconBtn from '../components/RoundIconBtn';
-import DropDownMenu from './DropDownMenu';
+import DropDownMenu from '../components/DropDownMenu';
 
 
 
