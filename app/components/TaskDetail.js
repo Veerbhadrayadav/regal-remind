@@ -7,25 +7,27 @@ import BoxIconBtn from './BoxIconBtn';
 import EditTask from '../modals/EditTask';
 import realmObject from '../storage/realmObject';
 import DeleteTaskModal from '../modals/DeleteTask';
+import constant from '../misc/constant';
 
 
 const TaskDetail = (props, handleTaskDelete) => {
     const { item } = props.route.params;
-    const [tasks, setTasks] = useState([]);
     const [editScreenVisible, setEditSreenVisible] = useState(false);
     const [detail, setDetail] = useState({});
     const [deleteConfirmationVisible, setDeleteConfirmationVisible] = useState(false);
 
     const width = Dimensions.get('window').width;
-    const detailsArray = Object.entries(item.details).map(([date, data]) => ({ date, ...data }));
+    const details = Object.entries(item.details).map(([date, data]) => ({ date, ...data }));
+    const [detailsArray,setDetailsArray] = useState(details) 
 
-    const handleOnDone = (date, timespent, info) => {
+    const handleOnDone = (timespent, info) => {
         setDetail({
-            [date]: {
+            [constant.TODAY]: {
                 'timespent': timespent,
                 'info': info
             }
-        })
+        });
+        setDetailsArray([...detailsArray, detail]);
     };
     const onDelete = (deleteType) => {
         handleTaskDelete(item.id, deleteType);
@@ -125,7 +127,7 @@ const TaskDetail = (props, handleTaskDelete) => {
                 item={item}
                 visible={editScreenVisible}
                 onCancel={() => setEditSreenVisible(false)}
-                onDone={(date, timespent, info) => handleOnDone(date, timespent, info)}
+                onDone={(timespent, info) => handleOnDone(timespent, info)}
             />
             <DeleteTaskModal 
                 visible={deleteConfirmationVisible}
