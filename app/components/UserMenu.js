@@ -36,7 +36,7 @@ const CustomDrawerContent = ({ userImage, username, navigation }) => {
       {/* Drawer items */}
       <TouchableOpacity
         style={{ padding: 20, borderBottomWidth: 1, borderBottomColor: '#ccc' }}
-        onPress={() => navigation.navigate('Home')} // Navigate to Home screen
+        onPress={() => navigation.navigate('HomeScreen')} // Navigate to Home screen
       >
         <Text>Home</Text>
       </TouchableOpacity>
