@@ -9,7 +9,7 @@ import DropDownMenu from '../components/DropDownMenu';
 const AddNewTask = ({ visible, onClose, onSubmit }) => {
     const [title, setTitle] = useState('');
     const [desc, setDesc] = useState('');
-    const [target, setTarget] = useState('');
+    const [target, setTarget] = useState(0);
     const [daytime, setDaytime] = useState('');
 
     const selectTarget = (item) => {
@@ -41,7 +41,7 @@ const AddNewTask = ({ visible, onClose, onSubmit }) => {
         setTitle('');
         setDesc('');
         setDaytime('');
-        setTarget('');
+        setTarget(0);
         onClose();
     };
     const handleModalClose = () => {
@@ -51,6 +51,8 @@ const AddNewTask = ({ visible, onClose, onSubmit }) => {
     const closeModal = () => {
         setTitle('');
         setDesc('');
+        setDaytime('');
+        setTarget(0);
         onClose();
     }
 
@@ -76,23 +78,20 @@ const AddNewTask = ({ visible, onClose, onSubmit }) => {
                         placeholder='Overview...'
                         placeholderTextColor={colors.LIGHT}
                         style={[styles.input, styles.desc]} />
-                    <DropDownMenu 
-                        data={daytimeList} 
-                        style={styles.dropDownBoxStyle}
-                        selectedValue={selectDaytime} />
+                    
                 </View>
-                <View style={{ flexDirection: 'row', alignContent: 'space-between' }}>
+                <View style={{ alignContent: 'space-between' }}>
                     <TextInput
                         style={styles.streakValueStyle}
                         placeholder='Target' 
                         keyboardType='numeric'
                         placeholderTextColor={colors.LIGHT} 
                         cursorColor={colors.LIGHT} 
-                        onChangeText={(text) => selectTarget(text)} />
-                    {/* <DropDownMenu 
-                        data={streakUnit} 
-                        style={styles.streakMenuStyle}
-                        selectedValue={selectTargetUnit} /> */}
+                        onChangeText={(text) => selectTarget(parseInt(text,10))} />
+                    <DropDownMenu 
+                        data={daytimeList} 
+                        style={styles.dropDownBoxStyle}
+                        selectedValue={selectDaytime} />
                 </View>
                 <View style={styles.btnContainer}>
                     {(title.trim() || desc.trim()) ? (<RoundIconBtn iconname='cancel-presentation' size={60} style={styles.crossBtnStyle} onPress={closeModal} />) : null}
@@ -165,11 +164,10 @@ const styles = StyleSheet.create({
         borderColor: colors.LIGHT,
         borderWidth: 4,
         borderRadius: 15,
-        width: '40%',
         height: 50,
         paddingLeft: 20,
-        marginTop: 5,
-        marginLeft: 10,
+        marginVertical: 2.5,
+        marginHorizontal: 10,
         fontSize: 20,
         fontWeight: 'bold',
         color: colors.LIGHT,

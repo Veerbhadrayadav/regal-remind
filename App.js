@@ -33,18 +33,15 @@ export default function App() {
   if (!user.username) return <Intro onFinish={findUser}/>;
   return (
   <NavigationContainer>
-    <Drawer.Navigator 
-        hidden 
+    <Drawer.Navigator screenOptions={{headerShown: false}}
         drawerContent={(props) => <CustomDrawerContent {...props} userImage="" username={user.username} />}>
-        <Drawer.Screen 
-            hiddenw  
-            name='HomeScreen' >
+        <Drawer.Screen name='HomeScreen'>
             {(props) => <HomeScreen {...props} user={user}/>}
         </Drawer.Screen>
         <Drawer.Screen component={TaskDetail} name='TaskDetail'/>
     </Drawer.Navigator>
   </NavigationContainer>
-  
+
   );
 };
 
