@@ -30,7 +30,7 @@ const Intro = ({onFinish}) => {
                 placeholderTextColor={colors.LIGHT} 
                 style={styles.textInput} 
             />
-            {name.trim().length >= 3 ? (
+            {name.trim().length >= 3 ? 
                 <RoundIconBtn 
                     iconname="arrow-circle-right"
                     size={50} 
@@ -38,7 +38,7 @@ const Intro = ({onFinish}) => {
                     style={styles.iconStyle}  
                     onPress={handleSubmit}
                 />
-            ) : null}
+             : null}
        </View>
        </>
    );

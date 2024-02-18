@@ -21,7 +21,6 @@ const CustomDrawerContent = ({ userImage, username, navigation }) => {
 
   return (
     <View style={{ flex: 1 }}>
-      {/* Header */}
       <View style={{ padding: 20, backgroundColor: '#f0f0f0', alignItems: 'center' }}>
         <TouchableOpacity onPress={handleUploadImage}>
           {selectedImage ? (
@@ -33,13 +32,12 @@ const CustomDrawerContent = ({ userImage, username, navigation }) => {
         <Text style={{ marginTop: 10 }}>{username}</Text>
       </View>
       
-      {/* Drawer items */}
-      <TouchableOpacity
+      {/* <TouchableOpacity
         style={{ padding: 20, borderBottomWidth: 1, borderBottomColor: '#ccc' }}
         onPress={() => navigation.navigate('HomeScreen')} // Navigate to Home screen
       >
         <Text>Home</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     
       
       {/* Add more drawer items as needed */}

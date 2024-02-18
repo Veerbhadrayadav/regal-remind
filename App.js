@@ -30,7 +30,7 @@ export default function App() {
   }, []);
 
   
-  if (!user.username) return <Intro onFinish={findUser}/>;
+  if (!user.username) return (<Intro onFinish={findUser}/>);
   return (
   <NavigationContainer>
     <Drawer.Navigator screenOptions={{headerShown: false}}
@@ -41,7 +41,6 @@ export default function App() {
         <Drawer.Screen component={TaskDetail} name='TaskDetail'/>
     </Drawer.Navigator>
   </NavigationContainer>
-
   );
 };
 

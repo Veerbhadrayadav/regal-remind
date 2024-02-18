@@ -7,10 +7,12 @@ import colors from '../misc/colors';
 import TaskBox from '../components/TaskBox';
 import realmObject from '../storage/realmObject';
 import Functions from '../misc/Functions';
+import DeleteTaskModal from '../modals/DeleteTask';
 
 const HomeScreen = ({ user, navigation }) => {
     const [greet, setGreet] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
+    const [deleteModalVisible, setDeleteModalVisible] = useState(false);
     const [tasks, setTasks] = useState([]);
     const findGreet = () => {
         const hrs = new Date().getHours();
@@ -56,8 +58,8 @@ const HomeScreen = ({ user, navigation }) => {
         }
         
     };    
-    const handleBoxPress = (item, handleTaskDelete) => {
-        navigation.navigate('TaskDetail', { item, handleTaskDelete });
+    const handleBoxPress = (item) => {
+        navigation.navigate('TaskDetail', { item });
     };
     useEffect(() => {
         // handleTaskDelete(user.tasks[0].id);
@@ -89,7 +91,7 @@ const HomeScreen = ({ user, navigation }) => {
                             size={50}
                             color={colors.LIGHT}
                             style={styles.addIconBt}
-                            onPress={() => setModalVisible(true)}
+                            onPress={() => setDeleteModalVisible(true)}
                         />
                     </View>
                 </View>
@@ -99,6 +101,9 @@ const HomeScreen = ({ user, navigation }) => {
                 visible={modalVisible}
                 onClose={() => setModalVisible(false)}
                 onSubmit={handleOnSubmit} />
+            <DeleteTaskModal 
+                visible={deleteModalVisible}
+                onRequestClose={() => setDeleteModalVisible(false)}/>
         </>
     );
 };

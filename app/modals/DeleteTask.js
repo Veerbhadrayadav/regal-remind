@@ -1,23 +1,19 @@
 import React, { useState } from 'react';
 import { Button, Modal, Text, View } from 'react-native';
 
-const DeleteTaskModal = ({ onDelete }) => {
-  const [modalVisible, setModalVisible] = useState(false);
+const DeleteTaskModal = ({ onDelete, visible, onRequestClose }) => {
 
   const handleDelete = (deleteType) => {
-    setModalVisible(false);
     onDelete(deleteType); // Pass the deleteType to the onDelete function
   };
 
   return (
     <View style={{ marginTop: 22 }}>
       <Modal
-        animationType="slide"
+        animationType='fade'
         transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(!modalVisible);
-        }}
+        visible={visible}
+        onRequestClose={onRequestClose}
       >
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
           <View style={{ backgroundColor: 'white', padding: 20 }}>

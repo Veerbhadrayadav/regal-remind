@@ -6,27 +6,27 @@ import constant from '../misc/constant';
 
 
 const EditTask = ({ item, onCancel, onDone, visible }) => {
-    const [timespent, setTimespent] = useState(0);
+    const [timespent, setTimespent] = useState('');
     const [info, setInfo] = useState('');
 
     const width = (Dimensions.get('window').width - 20) / 3;
     
-    const handleModalClose = () => {
-        Keyboard.dismiss();
-    };
+    // const handleModalClose = () => {
+    //     Keyboard.dismiss();
+    // };
 
     const handleOnDone = () => {
-        if (timespent > 0) {
+        // if (timespent > 0) {
             onDone(timespent, info)
             setInfo('')
-            setTimespent(0)
-        } else {
+            setTimespent('')
+        // } else {
             // showError()
-        };
+        // };
     };
     const handleOnCancel = () => {
         setInfo('')
-        setTimespent(0)
+        setTimespent('')
         onCancel()
     };
     return (
@@ -66,9 +66,9 @@ const EditTask = ({ item, onCancel, onDone, visible }) => {
                     <BoxIconBtn iconname='x' size={30} title='Cancel' onPress={handleOnCancel} style={styles.btnStyle} />
                     <BoxIconBtn iconname='check' size={30} title='Done' onPress={handleOnDone} style={styles.btnStyle} />
                 </View>
-                <TouchableWithoutFeedback onPress={handleModalClose}>
+                {/* <TouchableWithoutFeedback onPress={handleModalClose}>
                     <View style={[styles.modalBG, StyleSheet.absoluteFillObject]} />
-                </TouchableWithoutFeedback>
+                </TouchableWithoutFeedback> */}
             </Modal>
         </>
     );

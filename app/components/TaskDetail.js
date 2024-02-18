@@ -10,15 +10,14 @@ import DeleteTaskModal from '../modals/DeleteTask';
 import constant from '../misc/constant';
 
 
-const TaskDetail = (props, handleTaskDelete) => {
+const TaskDetail = (props) => {
     const { item } = props.route.params;
     const [editScreenVisible, setEditSreenVisible] = useState(false);
     const [detail, setDetail] = useState({});
     const [deleteConfirmationVisible, setDeleteConfirmationVisible] = useState(false);
 
     const width = Dimensions.get('window').width;
-    const details = Object.entries(item.details).map(([date, data]) => ({ date, ...data }));
-    const [detailsArray,setDetailsArray] = useState(details) 
+    const detailsArray = Object.entries(item.details).map(([date, data]) => ({ date, ...data }));
 
     const handleOnDone = (timespent, info) => {
         setDetail({
@@ -27,11 +26,10 @@ const TaskDetail = (props, handleTaskDelete) => {
                 'info': info
             }
         });
-        setDetailsArray([...detailsArray, detail]);
     };
-    const onDelete = (deleteType) => {
-        handleTaskDelete(item.id, deleteType);
-    }
+    // const onDelete = (deleteType) => {
+    //     handleTaskDelete(item.id, deleteType);
+    // }
     return (
         <>
             <FlatList
@@ -69,7 +67,7 @@ const TaskDetail = (props, handleTaskDelete) => {
                                 labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
                                 datasets: [
                                     {
-                                        data: [12, 45, 16, 0, 120, 13, 23]
+                                        data: [12, 45, 16, 0, 21, 13, 23]
                                     }
                                 ]
                             }}
@@ -94,6 +92,7 @@ const TaskDetail = (props, handleTaskDelete) => {
                                     stroke: "#ffa726"
                                 }
                             }}
+                            bezier
                             style={{
                                 marginVertical: 8,
                                 marginHorizontal: 10,
@@ -121,7 +120,7 @@ const TaskDetail = (props, handleTaskDelete) => {
             />
             <View style={{ flexDirection: 'row', padding: 10, position: 'absolute', bottom: 0, alignSelf: 'center' }}>
                 <BoxIconBtn iconname='edit' size={30} title='Edit' onPress={() => setEditSreenVisible(true)} style={styles.btnStyle} />
-                <BoxIconBtn iconname='delete' size={30} title='Delete' onPress={() => setDeleteConfirmationVisible(true)} style={styles.btnStyle} />
+                <BoxIconBtn iconname='delete' size={30} title='Delete'  style={styles.btnStyle} />
             </View>
             <EditTask
                 item={item}
@@ -129,10 +128,10 @@ const TaskDetail = (props, handleTaskDelete) => {
                 onCancel={() => setEditSreenVisible(false)}
                 onDone={(timespent, info) => handleOnDone(timespent, info)}
             />
-            <DeleteTaskModal 
+            {/* <DeleteTaskModal 
                 visible={deleteConfirmationVisible}
                 onDelete={(deleteType) => onDelete(deleteType) }
-            />
+            /> */}
         </>
     );
 };
